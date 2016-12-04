@@ -12,3 +12,6 @@
 */
 
 Route::get('/', 'PagesController@indexPage');
+Route::post('/listLifx', 'LightController@listLifxLights');
+Route::post('/changeLifxState', 'LightController@changeLifxState');
+Route::post('/breatheLifxLights', 'LightController@breatheLifxLights');

@@ -16,48 +16,55 @@ this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+th
  */
 
 $(function() {
-slideout = new Slideout({
-      'panel': document.getElementById('content-wrap'),
-      'menu': document.getElementById('mobile-menu'),
-      'padding': 256,
-      'tolerance': 70
+
+    $("#listLifx").click(function(e) {
+
+        $.ajax({
+            url: "listLifx",
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(res) {
+
+            $("#resbox").text(res);
+        });
+
     });
 
-    $("#mobile-menu-link").click(function(e) {
-      e.preventDefault();
-      slideout.toggle();
+    $("#changeLifxState").click(function(e) {
+
+        $.ajax({
+            url: "changeLifxState",
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(res) {
+
+            $("#resbox").text(res);
+        });
+
     });
-  setTimeout(function() {
-    showit("nav-image-top", "fadeInDown")
-  }, 100);
-  setTimeout(function() {
-    showit("nav-image-bottom", "fadeInRight");
-    showit("nav-container", "fadeInDown");
 
-  }, 700);
+    $("#breatheLifxLights").click(function(e) {
 
-  setTimeout(function() {
-    showit("circle-first", "fadeInUp");
-  }, 800);
+        $.ajax({
+            url: "breatheLifxLights",
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(res) {
 
-  setTimeout(function() {
-    showit("circle-second", "fadeInUp");
-  }, 900);
+            $("#resbox").text(res);
+        });
 
-  setTimeout(function() {
-    showit("circle-third", "fadeInUp");
-  }, 1000);
-
-  setTimeout(function() {
-    showit("circle-fourth", "fadeInUp");
-  }, 1100);
-})
+    });
 
 
-function showit(elid, className) {
-  // $("#" + elid).css('visibility','visible').hide().fadeIn(speed);
-  $("#" + elid).css('visibility','visible').addClass(className);
-}
+
+});
 
 /* A polyfill for browsers that don't support ligatures. */
 /* The script tag referring to this file must be placed before the ending body tag. */
