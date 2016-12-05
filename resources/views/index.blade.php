@@ -1,32 +1,46 @@
-@extends('master')
+@extends('master') @section('content')
 
 
-@section('content')
-
-<button type="button" id="listLifx">
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" id="listLifx">
   List Lights
 </button>
 
-<button type="button" id="changeLifxState">
+        <button type="button" id="changeLifxState">
   Toggle On/Off
 </button>
 
-<button type="button" id="breatheLifxLights">
+        <button type="button" id="breatheLifxLights">
   Breathe All Lights
-
 </button>
 
 
+        <div>
 
-<div class="response">
+            <label>Light Number</label>
+            <input type="number" class="light-prop required"  id="lightIndex"><br>
 
-Response Here
+            <label>Light brightness</label>
+            <input type="number" class="light-prop required" id="lightBrightness"><br>
 
-<p id="resbox">
+            <label>Light Temperature</label>
+            <input type="number" class="light-prop required" id="lightTemp"><br>
+
+            <button id="setState">
+  Set State
+</button>
+        </div>
 
 
-</p>
+    </div>
 </div>
+<div class="row">
+    @foreach($lights as $light)
 
+      @include('partials.singlelight', $light)
+
+    @endforeach
+</div>
 
 @endsection

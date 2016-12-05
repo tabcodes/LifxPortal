@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Libraries\LifxSwitch\LifxSwitch;
 use Illuminate\Http\Request;
 
 class LightController extends Controller
@@ -13,48 +13,50 @@ class LightController extends Controller
 
     public function listLifxLights(Request $req)
     {
-        $link = 'https://api.lifx.com/v1/lights/all';
-        $authToken = $this->homeKey;
-        $ch = curl_init($link);
-        $headers = array('Authorization: Bearer '.$authToken);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
 
-        return response()->json($response);
+      $lifx = new LifxSwitch($this->homeKey);
+
+      try {
+        $list = $lifx->listLights();
+      } catch(Exception $e) {
+
+        abort(500);
+      }
+
+      return $list;
+
     }
 
-    public function changeLifxState(Request $req)
+    public function togglePower(Request $req)
     {
-        $link = 'https://api.lifx.com/v1/lights/all/toggle';
-        $authToken = $this->homeKey;
+      $lifx = new LifxSwitch($this->homeKey);
 
-        $headers = array('Authorization: Bearer '.$authToken);
+      try {
+        $list = $lifx->togglePowerAll();
+      } catch(Exception $e) {
 
-        $ch = curl_init($link);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        $response = curl_exec($ch);
+        abort(500);
+      }
 
-        return response()->json($response);
+      return $list;
     }
 
-    public function breatheLifxLights(Request $req)
-    {
-        $link = 'https://api.lifx.com/v1/lights/all/effects/breathe';
-        $authToken = $this->homeKey;
 
-        $headers = array('Authorization: Bearer '.$authToken);
-        $data = 'period=10&cycles=10&color=blue';
+    public function setLifxState(Request $req) {
+      $lifx = new LifxSwitch($this->homeKey);
 
-        $ch = curl_init($link);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
+      $lightIndex = $req['lightIndex'];
+      $brightness = $req['lightBrightness'];
+      $temp = $req['lightTemp'];
 
-        return response()->json($response);
+      try {
+        $res = $lifx->setState($lightIndex, $brightness, $temp);
+      } catch(Exception $e) {
+        abort(500);
+      }
+
+      return $res;
+
     }
+
 }
