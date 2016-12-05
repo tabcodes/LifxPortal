@@ -17,25 +17,10 @@ this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+th
 
 $(function() {
 
-    $("#listLifx").click(function(e) {
-
-        $.ajax({
-            url: "listLifx",
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        }).done(function(res) {
-
-            $("#resbox").text(res);
-        });
-
-    });
-
     $("#changeLifxState").click(function(e) {
 
         $.ajax({
-            url: "changeLifxState",
+            url: "togglePower",
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -49,6 +34,7 @@ $(function() {
 
     $("#breatheLifxLights").click(function(e) {
 
+
         $.ajax({
             url: "breatheLifxLights",
             method: 'POST',
@@ -57,8 +43,34 @@ $(function() {
             }
         }).done(function(res) {
 
-            $("#resbox").text(res);
         });
+
+    });
+
+
+    $("#setState").click(function(e) {
+      var dat = {};
+
+      $(".light-prop").each(function() {
+        var thisVal = $(this).val();
+        var thisId = $(this).attr('id');
+        dat[thisId] = thisVal;
+      })
+
+      console.log(dat);
+
+
+      $.ajax({
+        url:"setLifxState",
+        data: dat,
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      }).done(function(res) {
+        console.log(res);
+      })
+
 
     });
 
