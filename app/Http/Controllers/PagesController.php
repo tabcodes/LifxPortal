@@ -19,12 +19,6 @@ class PagesController extends Controller
     {
 
 
-        // try {
-        //   $this->Lifx->togglePowerAll();
-        // } catch(Exception $e) {
-        //   abort(500);
-        // }
-
         $lightList = $this->Lifx->lightList;
 
         return view('index')

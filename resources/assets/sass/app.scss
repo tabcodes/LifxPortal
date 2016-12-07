@@ -9,6 +9,11 @@ $grayish: #4D4847;
 $codegray: #2A2C35;
 $codegreen: #7AA084;
 
+.row {
+	margin:0px !important;
+	padding:0px !important;
+}
+
 
 body {
 	background-color: $bgcolor !important;
@@ -16,6 +21,33 @@ body {
 	font-family: $primfont !important;
 }
 
+header {
+	margin:0px !important;
+	width:100% !important;
+	background-color:rgb(25, 47, 68);
+	border-bottom: 2px solid black;
+}
+
+.container-fluid {
+	margin:0px !important;
+	padding:0px !important;
+
+}
+
+.header-text {
+
+	color:white;
+	font-size:24px;
+	padding:25px 10px 0px 10px;
+}
+
+.normal-weight {
+	font-weight: normal;
+}
+
+.bold-weight {
+	font-weight:bold;
+}
 
 .light-container {
 	text-align:center;
@@ -31,5 +63,19 @@ body {
 
 	.light-product {
 		font-size:20px;
+	}
+
+	.light-status {
+
+		.light-status-connected {
+			font-weight:bold;
+			color:green;
+		}
+
+		.light-status-offline {
+			font-weight:bold;
+			color:red;
+		}
+
 	}
 }

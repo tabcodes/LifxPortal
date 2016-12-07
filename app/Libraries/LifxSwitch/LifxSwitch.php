@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Libraries\LifxSwitch;
+use Exception;
+
 
 class LifxSwitch
 {
@@ -10,20 +12,46 @@ class LifxSwitch
     public function __construct($token)
     {
         $this->authtoken = $token;
+        $this->lightList = $this->loadList();
 
-        $link = 'https://api.lifx.com/v1/lights/all';
-        $authToken = $this->authtoken;
-        $ch = curl_init($link);
-        $headers = array('Authorization: Bearer '.$authToken);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
 
-        $this->lightList = json_decode($response, true);
+    }
+
+    public function loadList() {
+      $link = 'https://api.lifx.com/v1/lights/all';
+      $authToken = $this->authtoken;
+      $ch = curl_init($link);
+      $headers = array('Authorization: Bearer '.$authToken);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $response = curl_exec($ch);
+      $this->lightList = json_decode($response, true);
+
+      return json_decode($response, true);
+    }
+
+    public function togglePowerSingle($lightId) {
+
+
+      $link = "https://api.lifx.com/v1/lights/{$lightId}/toggle";
+
+      $headers = array('Authorization: Bearer ' . $this->authtoken);
+      $ch = curl_init($link);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_POST, true);
+
+      $response = curl_exec($ch);
+
+      $this->lightList = $this->loadList();
+
+
+      return $response;
     }
 
     public function togglePowerAll()
     {
+
         $link = 'https://api.lifx.com/v1/lights/all/toggle';
 
         $headers = array('Authorization: Bearer '.$this->authtoken);
@@ -34,7 +62,7 @@ class LifxSwitch
         curl_setopt($ch, CURLOPT_POST, true);
         $response = curl_exec($ch);
 
-        return response()->json($response);
+        return response($response);
     }
 
     public function setState($lightIndex, $brightness, $temp)

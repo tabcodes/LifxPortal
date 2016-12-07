@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 use App\Libraries\LifxSwitch\LifxSwitch;
 use Illuminate\Http\Request;
+use Exception;
 
 class LightController extends Controller
 {
     public function __construct()
     {
         $this->homeKey = getenv('LIFX_HOME_KEY');
+        $this->lifx = new LifxSwitch($this->homeKey);
+
     }
 
     public function listLifxLights(Request $req)
     {
 
-      $lifx = new LifxSwitch($this->homeKey);
+
 
       try {
-        $list = $lifx->listLights();
+        $list = $this->lifx->listLights();
       } catch(Exception $e) {
 
         abort(500);
@@ -27,12 +30,11 @@ class LightController extends Controller
 
     }
 
-    public function togglePower(Request $req)
+    public function togglePowerAll(Request $req)
     {
-      $lifx = new LifxSwitch($this->homeKey);
 
       try {
-        $list = $lifx->togglePowerAll();
+        $list = $this->lifx->togglePowerAll();
       } catch(Exception $e) {
 
         abort(500);
@@ -40,17 +42,29 @@ class LightController extends Controller
 
       return $list;
     }
+
+    public function togglePowerSingle(Request $req) {
+
+      try {
+        $res = $this->lifx->togglePowerSingle($req['lightIndex']);
+      } catch(Exception $e) {
+        return $e->getMessage();
+      }
+
+      return $res;
+    }
+
+
 
 
     public function setLifxState(Request $req) {
-      $lifx = new LifxSwitch($this->homeKey);
 
       $lightIndex = $req['lightIndex'];
       $brightness = $req['lightBrightness'];
       $temp = $req['lightTemp'];
 
       try {
-        $res = $lifx->setState($lightIndex, $brightness, $temp);
+        $res = $this->lifx->setState($lightIndex, $brightness, $temp);
       } catch(Exception $e) {
         abort(500);
       }

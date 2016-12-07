@@ -13,6 +13,7 @@
 
 Route::get('/', 'PagesController@indexPage');
 Route::post('/listLifx', 'LightController@listLifxLights');
-Route::post('/togglePower', 'LightController@togglePower');
+Route::post('/togglePowerAll', 'LightController@togglePowerAll');
 Route::post('/breatheLifxLights', 'LightController@breatheLifxLights');
 Route::post('/setLifxState', 'LightController@setLifxState');
+Route::post('/togglePowerSingle', 'LightController@togglePowerSingle');
