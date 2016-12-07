@@ -4,10 +4,27 @@
 
 $(function() {
 
+
+    $(".light-action-power").click(function(e) {
+
+        var thisId = $(this).data('light-id');
+
+        $.ajax({
+          url:"togglePowerSingle",
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            "lightIndex": thisId
+          }
+        })
+    });
+
     $("#changeLifxState").click(function(e) {
 
         $.ajax({
-            url: "togglePower",
+            url: "togglePowerAll",
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

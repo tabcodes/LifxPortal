@@ -1,8 +1,39 @@
 @import url("https://fonts.googleapis.com/css?family=Bree+Serif");
+.row {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
 body {
   background-color: #bdbdbd !important;
   color: #1b448f !important;
   font-family: "Bree Serif" !important;
+}
+
+header {
+  margin: 0px !important;
+  width: 100% !important;
+  background-color: #192f44;
+  border-bottom: 2px solid black;
+}
+
+.container-fluid {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.header-text {
+  color: white;
+  font-size: 24px;
+  padding: 25px 10px 0px 10px;
+}
+
+.normal-weight {
+  font-weight: normal;
+}
+
+.bold-weight {
+  font-weight: bold;
 }
 
 .light-container {
@@ -20,6 +51,16 @@ body {
 
 .light-container .light-product {
   font-size: 20px;
+}
+
+.light-container .light-status .light-status-connected {
+  font-weight: bold;
+  color: green;
+}
+
+.light-container .light-status .light-status-offline {
+  font-weight: bold;
+  color: red;
 }
 
 /*!
