@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
-$primfont: 'Bree Serif';
+@import url( 'https://fonts.googleapis.com/css?family=Open+Sans');
+$primfont: 'Open Sans';
 $bgcolor: rgb(189, 189, 189);
 $reddish: #AA3A45;
 $lightblue: #3685B5;
@@ -9,36 +9,38 @@ $grayish: #4D4847;
 $codegray: #2A2C35;
 $codegreen: #7AA084;
 
+
+
 .row {
-	margin:0px !important;
-	padding:0px !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
-
 body {
-	background-color: $bgcolor !important;
-	color:rgb(27, 68, 143) !important;
+	color: rgb(27, 68, 143) !important;
 	font-family: $primfont !important;
 }
 
 header {
-	margin:0px !important;
-	width:100% !important;
-	background-color:rgb(25, 47, 68);
+	margin: 0 !important;
+	width: 100% !important;
+	background-color: rgb(25, 47, 68);
 	border-bottom: 2px solid black;
 }
 
-.container-fluid {
-	margin:0px !important;
-	padding:0px !important;
+.initial_hidden {
+	display: none;
+}
 
+.container-fluid {
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
 .header-text {
-
-	color:white;
-	font-size:24px;
-	padding:25px 10px 0px 10px;
+	color: white;
+	font-size: 24px;
+	padding: 25px 10px 0;
 }
 
 .normal-weight {
@@ -46,36 +48,244 @@ header {
 }
 
 .bold-weight {
-	font-weight:bold;
+	font-weight: bold;
 }
 
-.light-container {
-	text-align:center;
+input[type='range'] {
+	-webkit-appearance: slider-vertical;
+	writing-mode: bt-lr;
+}
 
-	.power-icon {
-		font-size:48px;
-	}
+#light-control-row {
+	margin-top: 25px !important;
+	border-top: 2px solid $codegray;
+	border-bottom: 2px solid $codegray;
+	text-align: center;
 
-	.light-label {
-		font-weight:bold;
-		font-size:30px;
-	}
+	.light-container {
+		position: relative;
+		text-align: center;
+		display: inline-block;
+		float: none;
+		margin: 15px;
+		padding: 0;
+		height: 305px;
+		border: 3px solid black;
+		border-radius: 3px;
 
-	.light-product {
-		font-size:20px;
-	}
+		.light-inner {
+			margin: 0 !important;
+			padding: 0;
 
-	.light-status {
+			.light-label-header {
+				padding: 10px;
+				color: white;
+				margin: 0 !important;
+			}
 
-		.light-status-connected {
-			font-weight:bold;
-			color:green;
+			.label-header-on {
+				background: $lightblue;
+			}
+
+			.label-header-off {
+				background: rgb(25, 47, 68);
+			}
+
+			.light-content {
+				margin-top: 15px;
+
+				.icon-label {
+					font-size: 20px;
+				}
+
+				.power-icon {
+					font-size: 48px;
+					a {
+						i {
+							transition: all 0.5s ease-in-out;
+							-webkit-transition: all 0.5s ease-in-out;
+
+						}
+						i:hover {
+							transform: scale(1.1) !important;
+							-webkit-transform: scale(1.1) !important;
+						}
+					}
+
+
+
+
+				}
+
+			}
+
+
 		}
 
-		.light-status-offline {
-			font-weight:bold;
-			color:red;
+
+		.light-loader {
+			font-size: 80px;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			position: absolute;
+
+			i {
+				margin-top:calc(50% - 60px);
+			}
 		}
 
+		
+		.light-label {
+			font-weight: bold;
+			font-size: 30px;
+		}
+
+		.light-product {
+			font-size: 20px;
+		}
+
+		.light-status {
+			.light-status-connected {
+				font-weight: bold;
+				color: green;
+			}
+
+			.light-status-offline {
+				font-weight: bold;
+				color: red;
+			}
+		}
 	}
+}
+
+
+
+/**
+
+RANGESLIDER CSS -- FROM https://codepen.io/thelifemgmt/pen/CeLqA/
+
+THANKS BLANSIKER!!
+
+**/
+// Base Colors
+$shade-10: #2c3e50 !default;
+$shade-1: #d7dcdf !default;
+$shade-0: #fff !default;
+$teal: #1abc9c !default;
+// Reset
+* {
+	&,
+	&:after,
+	&:before {
+		box-sizing: border-box;
+	}
+}
+// body {
+//   font-family: sans-serif;
+//   padding: 60px 20px;
+//
+//   @media (min-width: 600px) {
+//     padding: 60px;
+//   }
+// }
+
+.range-slider {
+	margin: 60px 0 0;
+}
+// Range Slider
+$range-width: 100% !default;
+$range-handle-color: $shade-10 !default;
+$range-handle-color-hover: $teal !default;
+$range-handle-size: 20px !default;
+$range-track-color: $shade-1 !default;
+$range-track-height: 10px !default;
+$range-label-color: $shade-10 !default;
+$range-label-width: 60px !default;
+
+.range-slider {
+	width: $range-width;
+}
+
+.range-slider__range {
+	-webkit-appearance: none;
+	width: calc(100% - (#{$range-label-width + 13px}));
+	height: $range-track-height;
+	border-radius: 5px;
+	background: $range-track-color;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	// Range Handle
+	&::-webkit-slider-thumb {
+		appearance: none;
+		width: $range-handle-size;
+		height: $range-handle-size;
+		border-radius: 50%;
+		background: $range-handle-color;
+		cursor: pointer;
+		transition: background 0.15s ease-in-out;
+
+		&:hover {
+			background: $range-handle-color-hover;
+		}
+	}
+
+	&:active::-webkit-slider-thumb {
+		background: $range-handle-color-hover;
+	}
+
+	&::-moz-range-thumb {
+		width: $range-handle-size;
+		height: $range-handle-size;
+		border: 0;
+		border-radius: 50%;
+		background: $range-handle-color;
+		cursor: pointer;
+		transition: background 0.15s ease-in-out;
+
+		&:hover {
+			background: $range-handle-color-hover;
+		}
+	}
+
+	&:active::-moz-range-thumb {
+		background: $range-handle-color-hover;
+	}
+}
+// Range Label
+.range-slider__value {
+	display: inline-block;
+	position: relative;
+	width: $range-label-width;
+	color: $shade-0;
+	line-height: 20px;
+	text-align: center;
+	border-radius: 3px;
+	background: $range-label-color;
+	padding: 5px 10px;
+	margin-left: 8px;
+
+	&:after {
+		position: absolute;
+		top: 8px;
+		left: -7px;
+		width: 0;
+		height: 0;
+		border-top: 7px solid transparent;
+		border-right: 7px solid $range-label-color;
+		border-bottom: 7px solid transparent;
+		content: '';
+	}
+}
+// Firefox Overrides
+::-moz-range-track {
+	background: $range-track-color;
+	border: 0;
+}
+
+input::-moz-focus-inner,
+input::-moz-focus-outer {
+	border: 0;
 }

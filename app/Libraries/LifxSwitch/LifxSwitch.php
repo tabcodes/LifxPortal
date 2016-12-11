@@ -32,6 +32,8 @@ class LifxSwitch
 
     public function togglePowerSingle($lightId) {
 
+      // Trigger Error Hurr
+      //$lightId = subStr($lightId, 3);
 
       $link = "https://api.lifx.com/v1/lights/{$lightId}/toggle";
 
@@ -43,10 +45,35 @@ class LifxSwitch
 
       $response = curl_exec($ch);
 
+      $res = json_decode($response, true);
+
+      $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+      curl_close($ch);
+
+      $resArr['responsecode'] = $httpCode;
+
+      if($httpCode != 207) {
+          return json_encode($resArr);
+      }
+
+      if( isset($res["results"][0]["status"]) ) {
+        $resArr['status'] = $res["results"][0]["status"];
+      }
+
+
+      sleep(1);
+
       $this->lightList = $this->loadList();
 
+      foreach($this->lightList as $light) {
+        if($light['id'] == $lightId) {
+          $resArr['lightInfo'] = $light;
+          break;
+        }
+      }
 
-      return $response;
+      return json_encode($resArr);
     }
 
     public function togglePowerAll()
@@ -67,7 +94,7 @@ class LifxSwitch
 
     public function setState($lightIndex, $brightness, $temp)
     {
-        if (array_key_exists($lightIndex - 1, $this->lightList)) {
+        if( isset($this->lightList[$lightIndex -1]) ) {
             $lightId = $this->lightList[$lightIndex - 1]['id'];
         } else {
             throw new Exception("There is no light with an index of {$lightId}.");

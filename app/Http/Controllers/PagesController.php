@@ -18,7 +18,6 @@ class PagesController extends Controller
     public function indexPage(Request $req)
     {
 
-
         $lightList = $this->Lifx->lightList;
 
         return view('index')

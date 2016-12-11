@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Libraries\LifxSwitch\LifxSwitch;
 use Illuminate\Http\Request;
 use Exception;
+use View;
 
 class LightController extends Controller
 {
@@ -16,9 +17,6 @@ class LightController extends Controller
 
     public function listLifxLights(Request $req)
     {
-
-
-
       try {
         $list = $this->lifx->listLights();
       } catch(Exception $e) {
@@ -43,15 +41,27 @@ class LightController extends Controller
       return $list;
     }
 
-    public function togglePowerSingle(Request $req) {
+    public function togglePowerSingle($id) {
 
       try {
-        $res = $this->lifx->togglePowerSingle($req['lightIndex']);
+        $res = $this->lifx->togglePowerSingle($id);
       } catch(Exception $e) {
-        return $e->getMessage();
+        $resJson['status'] = "error";
+        return response()->json($resJson);
       }
 
-      return $res;
+        $res = json_decode($res, true);
+        $returnedLight = $res["lightInfo"];
+
+        $composedView = View::make('partials.singlelight')
+        ->with('light', $returnedLight)
+        ->with('reload', true)
+        ->render();
+
+        $res["composedView"] = $composedView;
+
+        return response()->json($res);
+
     }
 
 

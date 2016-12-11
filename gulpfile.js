@@ -16,10 +16,13 @@ const elixir = require('laravel-elixir');
  elixir(function(mix) {
      mix.sass(['app.scss',
              'bootstrap.min.css',
+             'rangeslider.css',
+             'font-awesome.min.css',
          ],
          'public/css/style.css');
 
      mix.scripts(['jquery.min.js',
+              'rangeslider.min.js',
              'bootstrap.min.js',
              'app.js',
              'liga.js',
