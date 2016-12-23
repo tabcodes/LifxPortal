@@ -23,14 +23,11 @@ class LightController extends Controller
       $temp = $req['temp'];
 
 
-
       try {
         $response = $this->lifx->setState($lightId, $color, $brightness, $temp);
       } catch(Exception $e) {
-        var_dump($e->getMessage());
         abort(500);
       }
-
       $returnedLight = $response["lightInfo"];
 
       $composedView = View::make('partials.singlelight')
@@ -72,14 +69,16 @@ class LightController extends Controller
     public function setStateGroup($id, Request $req) {
 
       $brightness = $req['brightness'];
+      $temp = $req['temp'];
       $lightId = $id;
 
       try {
-        $response = $this->lifx->setState($lightId, null, $brightness, null);
+        $response = $this->lifx->setState($lightId, null, $brightness, $temp);
       } catch(Exception $e) {
 
         abort(500);
       }
+
 
       $indexView = View::make('index')
       ->with("locations", $this->lifx->locationList)
