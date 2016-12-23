@@ -1,0 +1,61 @@
+<div class="group-control-row row">
+  <div class="col-md-2 col-sm-6 col-xs-6 group-header">
+    <h2>
+      {{ $group }}
+    </h2>
+  </div>
+  <div class="col-md-offset-2 col-md-3 col-sm-offset-3 col-sm-3 col-xs-6 group-actions">
+    <h2 class="action-mini" >
+      <a class="power-group" data-group="{{$group}}" href="#">
+        <i class="fa fa-power-off brightness" aria-hidden="true"></i>
+      </a>
+    </h2>
+    <h2 class="action-mini" >
+      <a class="brightness-group" data-group="{{$group}}" href="#">
+        <i class="fa fa-lightbulb-o brightness" aria-hidden="true"></i>
+      </a>
+    </h2>
+    <h2 class="action-mini">
+      <a class="temp-group" data-group="{{$group}}" href="#">
+        <i class="fa fa-thermometer-empty brightness" aria-hidden="true"></i>
+      </a>
+    </h2>
+    <h2 class="action-mini">
+      <i class="fa fa-" aria-hidden="true"></i>
+    </h2>
+  </div>
+
+</div>
+
+<div class="group-control-detail">
+    <div
+    class="col-lg-offset-2 col-lg-8 group-detail group-brightness-container initial_hidden"
+    id="{{$group}}-brightness-detail"
+    >
+      <input type="range"
+      id="{{$group}}-brightness-slider"
+      class="group-brightness-slider"
+      data-group="{{$group}}"
+      min="0"
+      max="100"
+      step="1"
+      value="{{ floor($lights[0]['brightness'] * 100) }}" /><br />
+      <span id="{{$group}}-brightness-text" class="group-brightness-text">
+        {{floor($lights[0]['brightness'] * 100)}}%
+      </span>
+      <input type="button"
+      id="{{$group}}-brightness-set"
+      class="group-brightness-set"
+      data-group="{{$group}}"
+      value="Set" />
+    </div>
+    {{-- <div class="col-lg-offset-2 col-lg-8 group-detail group-temperature-container" id="{{$group}}-temp-detail">
+      <input type="range"
+      id="{{$group}}-temp-value"
+      min="2000"
+      max="9000"
+      step="500"
+       />
+
+    </div> --}}
+</div>

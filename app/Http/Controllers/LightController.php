@@ -15,6 +15,35 @@ class LightController extends Controller
 
     }
 
+    public function setStateSingle($id, Request $req) {
+
+      $lightId = $id;
+      $color = $req['color'];
+      $brightness = ($req['brightness'] / 100);
+      $temp = $req['temp'];
+
+
+
+      try {
+        $response = $this->lifx->setState($lightId, $color, $brightness, $temp);
+      } catch(Exception $e) {
+        var_dump($e->getMessage());
+        abort(500);
+      }
+
+      $returnedLight = $response["lightInfo"];
+
+      $composedView = View::make('partials.singlelight')
+      ->with('light', $returnedLight)
+      ->with('reload', true)
+      ->render();
+
+      $response["composedView"] = $composedView;
+
+      return $response;
+
+    }
+
     public function listLifxLights(Request $req)
     {
       try {
@@ -34,11 +63,54 @@ class LightController extends Controller
       try {
         $list = $this->lifx->togglePowerAll();
       } catch(Exception $e) {
-
         abort(500);
       }
 
       return $list;
+    }
+
+    public function setStateGroup($id, Request $req) {
+
+      $brightness = $req['brightness'];
+      $lightId = $id;
+
+      try {
+        $response = $this->lifx->setState($lightId, null, $brightness, null);
+      } catch(Exception $e) {
+
+        abort(500);
+      }
+
+      $indexView = View::make('index')
+      ->with("locations", $this->lifx->locationList)
+      ->with("groups", $this->lifx->groupList)
+      ->with("lights", $this->lifx->lightList)
+      ->render();
+
+      $resArr["composedView"] = $indexView;
+
+      return $resArr;
+    }
+
+    public function togglePowerGroup($id)
+    {
+
+      try {
+        $response = $this->lifx->togglePowerSingle($id);
+      } catch(Exception $e) {
+
+        abort(500);
+      }
+
+      $indexView = View::make('index')
+      ->with("locations", $this->lifx->locationList)
+      ->with("groups", $this->lifx->groupList)
+      ->with("lights", $this->lifx->lightList)
+      ->render();
+
+      $resArr["composedView"] = $indexView;
+
+      return $resArr;
     }
 
     public function togglePowerSingle($id) {

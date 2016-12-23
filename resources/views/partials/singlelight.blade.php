@@ -1,24 +1,14 @@
 
-  <div class="light-container col-md-2 col-centered col-sm-4" id="{{ $light['id'] }}">
+  <div class="light-container col-lg-2 col-md-3 col-centered col-sm-5" id="{{ $light['id'] }}">
     <div class="light-inner">
-      <h3 class="light-label-header label-header-{{$light['power'] }}">
+      <h4 class="light-label-header label-header-{{$light['power'] }}">
         <b>{{ $light['label'] }}</b>
-      </h3>
+      </h4>
 
 
       <div class="light-content">
 
-        <div class="power-icon">
-          @if($light['connected'] == 1)
-            <a href="#" class="light-action light-action-power" data-action="togglePowerSingle" data-light-id="{{ $light['id'] }}" >
-              <i class="fa fa-power-off light-power-{{ $light['power'] }}" aria-hidden="true"></i>
-            </a>
-          @else
-            <a href="#" class="light-discon" data-action="togglePowerSingle" data-light-id="{{ $light['id'] }}" >
-              <i class="fa fa-plug light-power-{{ $light['power'] }}" aria-hidden="true"></i>
-            </a>
-          @endif
-        </div>
+        @include('partials.power-button')
 
         <p class="light-product">
           {{ $light['product']['company'] }} {{ $light['product']['name'] }}
@@ -38,7 +28,22 @@
 
         </p>
 
+        @include('partials.slider-brightness')
 
+        @if($light['product']['capabilities']['has_color'])
+          @include('partials.slider-color')
+        @endif
+
+
+      @if($light['product']['capabilities']['has_variable_color_temp'])
+        @include('partials.slider-temp')
+      @endif
+
+
+      <div class="light-button-container">
+        <button class="button light-button light-button-apply btn btn-default" data-light-id="{{ $light['id'] }}" id="setstate-{{ $light['id'] }}" type="button">
+          Apply Changes
+        </button>
 
       </div>
 

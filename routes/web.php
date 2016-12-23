@@ -17,3 +17,6 @@ Route::post('/togglePowerAll', 'LightController@togglePowerAll');
 Route::post('/breatheLifxLights', 'LightController@breatheLifxLights');
 Route::post('/setLifxState', 'LightController@setLifxState');
 Route::post('/togglePowerSingle/{id}', 'LightController@togglePowerSingle');
+Route::post('/togglePowerGroup/{id}', 'LightController@togglePowerGroup');
+Route::post('/setStateGroup/{id}', 'LightController@setStateGroup');
+Route::post('/setStateSingle/{id}', 'LightController@setStateSingle');
