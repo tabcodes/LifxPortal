@@ -14,19 +14,24 @@ const elixir = require('laravel-elixir');
  */
 
  elixir(function(mix) {
-     mix.sass(['app.scss',
+     mix.sass([
              'bootstrap.min.css',
-             'rangeslider.css',
+             'spectrum.css',
              'font-awesome.min.css',
+             'rangeslider.css',
+             'select2.min.css',
+             'app.scss',
          ],
          'public/css/style.css');
 
      mix.scripts(['jquery.min.js',
-              'rangeslider.min.js',
              'bootstrap.min.js',
-             'app.js',
              'liga.js',
-             'slideout.min.js'
+             'spectrum.js',
+             'rangeslider.js',
+             'select2.min.js',
+             'jquery-knob-min.js',
+             'app.js',
          ],
          'public/js/main.js');
  });

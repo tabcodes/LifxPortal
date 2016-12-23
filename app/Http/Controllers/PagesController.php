@@ -19,8 +19,13 @@ class PagesController extends Controller
     {
 
         $lightList = $this->Lifx->lightList;
+        $locationList = $this->Lifx->locationList;
+        $groupList = $this->Lifx->groupList;
+
 
         return view('index')
+        ->with("locations", $locationList)
+        ->with("groups", $groupList)
         ->with("lights", $lightList);
     }
 }

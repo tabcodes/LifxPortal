@@ -8,6 +8,10 @@ class LifxSwitch
 {
     public $authtoken;
     public $lightList;
+    public $locationList = [];
+    public $groupList = [];
+    private $baseUrl = "https://api.lifx.com/v1/lights/";
+
 
     public function __construct($token)
     {
@@ -27,9 +31,29 @@ class LifxSwitch
       $response = curl_exec($ch);
       $this->lightList = json_decode($response, true);
 
+      foreach($this->lightList as $item) {
+
+        $location = $item["location"]["name"];
+
+        if(!in_array($location, $this->locationList)) {
+          $this->locationList[] = $location;
+        }
+
+
+        $group = $item["group"]["name"];
+        if(!in_array($group, $this->groupList)) {
+          $this->groupList[$group] = $item["group"]["id"];
+        }
+
+      }
+
+
+
       return json_decode($response, true);
     }
 
+
+    // To be deprecated!!
     public function togglePowerSingle($lightId) {
 
       // Trigger Error Hurr
@@ -79,34 +103,23 @@ class LifxSwitch
     public function togglePowerAll()
     {
 
-        $link = 'https://api.lifx.com/v1/lights/all/toggle';
+        $endpoint = 'all/toggle';
+        $method = 'POST';
 
-        $headers = array('Authorization: Bearer '.$this->authtoken);
-
-        $ch = curl_init($link);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        $response = curl_exec($ch);
+        $response = $this->makeLightCall($endpoint, null, $method);
 
         return response($response);
     }
 
-    public function setState($lightIndex, $brightness, $temp)
+    public function setState($lightId, $color, $brightness, $temp)
     {
-        if( isset($this->lightList[$lightIndex -1]) ) {
-            $lightId = $this->lightList[$lightIndex - 1]['id'];
-        } else {
-            throw new Exception("There is no light with an index of {$lightId}.");
-        }
 
         $data = array(
           'states' => array(
               array(
-                  'selector' => "id:{$lightId}",
-                  'brightness' => $brightness,
+                  'selector' => "{$lightId}",
                   'kelvin' => $temp,
-                  'power' => 'on'
+                  'brightness' => "{$brightness}"
               ),
             ),
             'defaults' => array(
@@ -114,23 +127,67 @@ class LifxSwitch
           ),
         );
 
-        $link = 'https://api.lifx.com/v1/lights/states';
-
-        $headers = array(
-          'Authorization: Bearer '. $this->authtoken,
-          'Content-Type: application/json',
-        );
+        if($color) {
+          $data['states'][0]['color'] = "hue:{$color['h']} saturation:{$color['s']}";
+        }
 
 
-        $ch = curl_init($link);
+        $link = 'states';
+        $method = 'PUT';
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        $response = $this->makeLightCall($link, $data, $method);
 
-        $response = curl_exec($ch);
+        $this->lightList = $this->loadList();
 
-        return $response;
+        $resArr["response"] = $response;
+
+        foreach($this->lightList as $light) {
+          if($light['id'] == $lightId) {
+            $resArr['lightInfo'] = $light;
+            break;
+          }
+        }
+
+        return $resArr;
     }
+
+
+    private function makeLightCall(String $endpoint, Array $data, String $method) {
+
+      if( (!$endpoint) || (strlen($endpoint) <=0) ) {
+        throw new Exception("No light URL passed.");
+      }
+
+      $link = $this->baseUrl . $endpoint;
+
+      $headers = array('Authorization: Bearer '.$this->authtoken);
+      $headers[] = "Content-Type: application/json";
+
+
+      $ch = curl_init($link);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+      switch($method) {
+        case "PUT":
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+          break;
+        case "POST":
+        default:
+          curl_setopt($ch, CURLOPT_POST, true);
+          break;
+      }
+
+      if($data) {
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+      }
+
+
+      $response = curl_exec($ch);
+      sleep(1);
+
+      return $response;
+    }
+
+
 }
