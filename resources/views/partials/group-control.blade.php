@@ -43,9 +43,26 @@
       <span id="{{$group}}-brightness-text" class="group-brightness-text">
         {{floor($lights[0]['brightness'] * 100)}}%
       </span>
+      <button id="{{$group}}-brightness-set" class="btn btn-default group-brightness-set" data-group="{{$group}}"/>Set</button>
+    </div>
+    <div
+    class="col-lg-offset-2 col-lg-8 group-detail group-temp-container initial_hidden"
+    id="{{$group}}-temp-detail"
+    >
+      <input type="range"
+      id="{{$group}}-temp-slider"
+      class="group-temp-slider"
+      data-group="{{$group}}"
+      min="2000"
+      max="9000"
+      step="500"
+      value="{{ $lights[0]['color']['kelvin'] }}" /><br />
+      <span id="{{$group}}-temp-text" class="group-temp-text">
+        {{ $lights[0]['color']['kelvin'] }}K
+      </span>
       <input type="button"
-      id="{{$group}}-brightness-set"
-      class="group-brightness-set"
+      id="{{$group}}-temp-set"
+      class="group-temp-set"
       data-group="{{$group}}"
       value="Set" />
     </div>

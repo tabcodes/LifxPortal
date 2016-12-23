@@ -11259,6 +11259,15 @@ header {
   position: relative;
 }
 
+.group-container .group-detail {
+  margin-top: 25px;
+}
+
+.group-container .group-brightness-container .group-brightness-text {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .group-container .group-brightness-container .rangeslider__fill {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f2f2+0,53cbf1+63,05abe0+100 */
   background: #f2f2f2;

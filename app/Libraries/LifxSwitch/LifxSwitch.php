@@ -118,8 +118,6 @@ class LifxSwitch
           'states' => array(
               array(
                   'selector' => "{$lightId}",
-                  'kelvin' => $temp,
-                  'brightness' => "{$brightness}"
               ),
             ),
             'defaults' => array(
@@ -129,6 +127,14 @@ class LifxSwitch
 
         if($color) {
           $data['states'][0]['color'] = "hue:{$color['h']} saturation:{$color['s']}";
+        }
+
+        if($temp) {
+          $data['states'][0]['kelvin'] = $temp;
+        }
+
+        if($brightness) {
+          $data['states'][0]['brightness'] = $brightness;
         }
 
 
@@ -142,7 +148,7 @@ class LifxSwitch
         $resArr["response"] = $response;
 
         foreach($this->lightList as $light) {
-          if($light['id'] == $lightId) {
+          if($light['id'] == str_replace('id:', '', $lightId)) {
             $resArr['lightInfo'] = $light;
             break;
           }
