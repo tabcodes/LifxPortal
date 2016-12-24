@@ -4,7 +4,7 @@
       {{ $group }}
     </h2>
   </div>
-  <div class="col-md-offset-2 col-md-3 col-sm-offset-3 col-sm-3 col-xs-6 group-actions">
+  <div class="col-md-offset-2 col-md-3 col-sm-offset-2 col-sm-4 col-xs-12 group-actions">
     <h2 class="action-mini" >
       <a class="power-group" data-group="{{$group}}" href="#">
         <i class="fa fa-power-off brightness" aria-hidden="true"></i>
@@ -20,9 +20,15 @@
         <i class="fa fa-thermometer-empty brightness" aria-hidden="true"></i>
       </a>
     </h2>
+    @if($colorStatus == 'color')
     <h2 class="action-mini">
-      <i class="fa fa-" aria-hidden="true"></i>
+      <input type="text"
+      class="dial-color-group"
+      data-group="{{$group}}"
+      />
     </h2>
+  @endif
+
   </div>
 
 </div>
@@ -66,13 +72,4 @@
       data-group="{{$group}}"
       value="Set" />
     </div>
-    {{-- <div class="col-lg-offset-2 col-lg-8 group-detail group-temperature-container" id="{{$group}}-temp-detail">
-      <input type="range"
-      id="{{$group}}-temp-value"
-      min="2000"
-      max="9000"
-      step="500"
-       />
-
-    </div> --}}
 </div>

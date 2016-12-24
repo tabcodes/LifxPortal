@@ -70,12 +70,12 @@ class LightController extends Controller
 
       $brightness = $req['brightness'];
       $temp = $req['temp'];
+      $color = $req['color'];
       $lightId = $id;
 
       try {
-        $response = $this->lifx->setState($lightId, null, $brightness, $temp);
+        $response = $this->lifx->setState($lightId, $color, $brightness, $temp);
       } catch(Exception $e) {
-
         abort(500);
       }
 

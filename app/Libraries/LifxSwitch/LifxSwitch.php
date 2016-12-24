@@ -42,7 +42,28 @@ class LifxSwitch
 
         $group = $item["group"]["name"];
         if(!in_array($group, $this->groupList)) {
-          $this->groupList[$group] = $item["group"]["id"];
+
+          $colorStatus = "";
+
+          foreach($this->lightList as $light) {
+            if($group != $light['group']['name']) {
+              continue;
+            }
+            $hasColor = $light['product']['capabilities']['has_color'];
+
+            if($hasColor == true) {
+              $colorStatus = "color";
+            } else {
+              continue;
+            }
+          }
+
+          if($colorStatus == "color") {
+            $this->groupList[$group] = $colorStatus;
+          } else {
+            $this->groupList[$group] = "white";
+
+          }
         }
 
       }
@@ -142,7 +163,6 @@ class LifxSwitch
         $method = 'PUT';
 
         $response = $this->makeLightCall($link, $data, $method);
-
         $this->lightList = $this->loadList();
 
         $resArr["response"] = $response;

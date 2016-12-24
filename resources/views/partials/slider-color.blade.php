@@ -1,7 +1,7 @@
 <div class="light-slider">
   <div class="slider-container">
     <input type="text"
-    class="dial-color"
+    class="dial-color-light"
     value=""
     data-lifx-color="{{json_encode($light['color'])}}"
     id="color-{{$light['id']}}"
