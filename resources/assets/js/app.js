@@ -12,12 +12,14 @@ $(function() {
         e.preventDefault();
         var groupId = $(this).data('group');
         var el = $("#" + groupId + "-brightness-detail");
-        if (!el.is(":visible")) {
-            $(".group-detail").slideUp('fast', function() {
-                el.slideDown();
-            });
+        if($(".group-detail").is(":visible")) {
+          $(".group-detail").slideUp('fast');
+        }
+
+        if(el.is(":visible")) {
+          el.slideUp('fast');
         } else {
-            $(".group-detail").slideUp();
+          el.slideDown('fast');
         }
 
     });
@@ -185,6 +187,7 @@ function handleLightSuccess(lightId, response) {
 }
 
 function handleGroupSuccess(groupId, response) {
+    console.log
     composedView = response.composedView;
 
     var el = $(composedView).find('#light-box-' + groupId);
@@ -341,7 +344,7 @@ function bindDials() {
         draw: binder
     });
 
-    $(".dial-color").each(function() {
+    $(".dial-color-light").each(function() {
 
         var colors = $(this).data('lifx-color');
 
@@ -355,5 +358,33 @@ function bindDials() {
 
     })
 
+    $(".dial-color-group").each(function() {
+
+      $(this).spectrum({
+        clickoutFiresChange: false,
+        palette: [
+        ['black', 'white', 'blanchedalmond'],
+        ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
+      ],
+        change: function() {
+
+            var groupId = $(this).data("group");
+            var groupString = "group:" + groupId;
+
+            dimGroupBox(groupId);
+
+            url = "setStateGroup/" + groupString;
+            groupColor = $(this).spectrum('get').toHsv();
+            data = {
+              'color': groupColor
+            };
+
+            callGroupAjax(url, data, groupId);
+        }
+
+
+      });
+
+    })
 
 }
