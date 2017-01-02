@@ -15,23 +15,31 @@ const elixir = require('laravel-elixir');
 
  elixir(function(mix) {
      mix.sass([
-             'bootstrap.min.css',
              'spectrum.css',
-             'font-awesome.min.css',
              'rangeslider.css',
              'select2.min.css',
-             'app.scss',
          ],
-         'public/css/style.css');
+         'public/css/lights.css');
 
-     mix.scripts(['jquery.min.js',
-             'bootstrap.min.js',
-             'liga.js',
+      mix.sass([
+        'bootstrap.min.css',
+        'font-awesome.min.css',
+        'ionicons.min.css',
+        'app.scss',
+      ], 'public/css/req.css')
+
+     mix.scripts([
              'spectrum.js',
              'rangeslider.js',
              'select2.min.js',
              'jquery-knob-min.js',
-             'app.js',
+             'lightcontrols.js',
          ],
-         'public/js/main.js');
+         'public/js/lights.js');
+
+    mix.scripts([
+        'jquery.min.js',
+        'bootstrap.min.js',
+        'site.js',
+      ], 'public/js/req.js')
  });
