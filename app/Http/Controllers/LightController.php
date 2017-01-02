@@ -5,14 +5,31 @@ use App\Libraries\LifxSwitch\LifxSwitch;
 use Illuminate\Http\Request;
 use Exception;
 use View;
+use App\User;
+use Auth;
 
 class LightController extends Controller
 {
-    public function __construct()
+    public function __construct(Request $req)
     {
-        $this->homeKey = getenv('LIFX_HOME_KEY');
-        $this->lifx = new LifxSwitch($this->homeKey);
 
+      $this->middleware('auth');
+
+      $this->middleware(function ($request, $next) {
+          $this->user = Auth::user();
+          $this->lifx = new LifxSwitch(decrypt($this->user->cloudkey));
+          return $next($request);
+      });
+
+
+
+
+    }
+
+    private function getLifxObject() {
+        $user = Auth::user();
+
+        $cloudKey = decrypt($user->cloudkey);
     }
 
     public function setStateSingle($id, Request $req) {
@@ -68,6 +85,7 @@ class LightController extends Controller
 
     public function setStateGroup($id, Request $req) {
 
+
       $brightness = $req['brightness'];
       $temp = $req['temp'];
       $color = $req['color'];
@@ -80,7 +98,7 @@ class LightController extends Controller
       }
 
 
-      $indexView = View::make('index')
+      $indexView = View::make('lightcontrol')
       ->with("locations", $this->lifx->locationList)
       ->with("groups", $this->lifx->groupList)
       ->with("lights", $this->lifx->lightList)
@@ -101,7 +119,7 @@ class LightController extends Controller
         abort(500);
       }
 
-      $indexView = View::make('index')
+      $indexView = View::make('lightcontrol')
       ->with("locations", $this->lifx->locationList)
       ->with("groups", $this->lifx->groupList)
       ->with("lights", $this->lifx->lightList)

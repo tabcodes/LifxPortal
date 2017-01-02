@@ -16,19 +16,26 @@ class LifxSwitch
     public function __construct($token)
     {
         $this->authtoken = $token;
-        $this->lightList = $this->loadList();
+
+        try {
+          $this->lightList = $this->loadList();
+        } catch(Exception $e) {
+          throw new Exception("Couldn't load list: {$e->getMessage()}");
+        }
 
 
     }
 
     public function loadList() {
-      $link = 'https://api.lifx.com/v1/lights/all';
-      $authToken = $this->authtoken;
-      $ch = curl_init($link);
-      $headers = array('Authorization: Bearer '.$authToken);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      $response = curl_exec($ch);
+      $link = 'all/';
+
+      try {
+        $response = $this->makeLightCall($link, null, 'GET');
+      } catch(Exception $e) {
+        throw new Exception("Error: {$e->getMessage()}");
+      }
+
+
       $this->lightList = json_decode($response, true);
 
       foreach($this->lightList as $item) {
@@ -178,7 +185,7 @@ class LifxSwitch
     }
 
 
-    private function makeLightCall(String $endpoint, Array $data, String $method) {
+    private function makeLightCall(String $endpoint, $data, String $method) {
 
       if( (!$endpoint) || (strlen($endpoint) <=0) ) {
         throw new Exception("No light URL passed.");
@@ -195,6 +202,9 @@ class LifxSwitch
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
       switch($method) {
+        case "GET":
+
+          break;
         case "PUT":
           curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
           break;
@@ -210,6 +220,24 @@ class LifxSwitch
 
 
       $response = curl_exec($ch);
+
+
+      $info = curl_getinfo($ch);
+
+      $httpcode = $info['http_code'];
+
+      if(curl_error($ch)) {
+        throw new Exception("cURL error: {curl_error($ch)}");
+      }
+
+      if($httpcode > 207 ) {
+        throw new Exception("Call was unsuccessful- HTTP Code {$httpcode}");
+      }
+
+
+
+
+      curl_close($ch);
       sleep(1);
 
       return $response;
