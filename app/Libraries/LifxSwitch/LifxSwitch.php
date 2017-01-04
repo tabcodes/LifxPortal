@@ -185,7 +185,7 @@ class LifxSwitch
     }
 
 
-    private function makeLightCall(String $endpoint, $data, String $method) {
+    private function makeLightCall($endpoint, $data, $method) {
 
       if( (!$endpoint) || (strlen($endpoint) <=0) ) {
         throw new Exception("No light URL passed.");

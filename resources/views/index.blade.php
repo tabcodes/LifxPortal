@@ -19,23 +19,40 @@
 
 <br /><br />
 
-<div class="row" id="desc-row">
+<div id="desc-row">
 
-    <div class="col-md-offset-2 col-sm-offset-1 col-md-2 col-sm-3 col-xs-12 desc-item">
+    <div class="col-md-3 col-sm-10 col-xs-10 desc-item">
       <h3 class="desc-title">Register an Account</h2>
-    </div>
-    <div class="col-md-1 col-sm-1">
-      <i class="hidden-xs icon ion-arrow-right-a"></i>
-    </div>
-    <div class=" col-md-2 col-sm-3 col-xs-12  desc-item">
-      <h3 class="desc-title">Set your LIFX Key</h2>
-    </div>
-    <div class="col-md-1 col-sm-1">
-      <i class="hidden-xs icon ion-arrow-right-a"></i>
+        <div class="desc-body">
+          <i class="icon ion-ionic"></i>
+          <br />
+          <div class="desc-text">
+            Sign up with your email and a password- that's it!
+          </div>
+        </div>
     </div>
 
-    <div class=" col-md-2 col-sm-3 col-xs-12 desc-item">
+    <div class="col-md-3 col-sm-10 col-xs-10  desc-item">
+      <h3 class="desc-title">Set your LIFX Key</h2>
+        <div class="desc-body">
+          <i class="icon ion-outlet"></i>
+          <br />
+          <div class="desc-text">
+            Get your Cloud Key from LIFX Cloud and set it on your Account page!
+          </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-10 col-xs-10 desc-item">
       <h3 class="desc-title">Control your Lights!</h2>
+
+        <div class="desc-body">
+          <i class="icon ion-levels"></i>
+          <br />
+          <div class="desc-text">
+            Change your lights from anywhere!
+          </div>
+        </div>
     </div>
 
 </div>

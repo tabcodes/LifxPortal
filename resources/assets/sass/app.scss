@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
-@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,700');
+@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url( 'https://fonts.googleapis.com/css?family=Space+Mono:400,700');
 $primfont: 'Open Sans', sans-serif;
 $codefont: 'Space Mono', monospace;
 $bgcolor: rgb(189, 189, 189);
@@ -12,6 +12,7 @@ $grayish: #4D4847;
 $codegray: #2A2C35;
 $codegreen: #7AA084;
 $headerblue: rgb(25, 47, 68);
+
 .row {
 	margin: 0 !important;
 	padding: 0 !important;
@@ -27,138 +28,150 @@ header {
 	width: 100% !important;
 	background-color: rgb(25, 47, 68);
 	border-bottom: 2px solid black;
-	padding-bottom:15px;
-	color:white;
+	padding-bottom: 15px;
+	color: white;
 }
 
 #main {
-	margin-bottom:20px !important;
+	margin-bottom: 20px !important;
 }
 
 #title-row {
-		font-family:$codefont !important;
-		text-shadow: 2px 2px 1px rgba(150, 150, 150, 1);
-		.top-def {
-			font-weight:bolder;
-		}
+	font-family: $codefont !important;
+	text-shadow: 2px 2px 1px rgba(150, 150, 150, 1);
 
-		#full-def {
-			font-size:24px;
-			font-weight:bold;
-			margin-left:25px;
-		}
+	.top-def {
+		font-weight: bolder;
+	}
+
+	#full-def {
+		font-size: 24px;
+		font-weight: bold;
+		margin-left: 25px;
+	}
 }
 
 #desc-row {
 	// display:flex;
 	// flex-direction:row;
 	// justify-content:space-around;
-	text-align:center;
-	font-weight:bold;
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
 
 	.desc-item {
-		border:3px solid $textcolor;
-		height:240px;
-		position:relative;
-		padding:0px !important;
+		margin-top:25px;
+		display: inline-block;
+		border: 3px solid $textcolor;
+		height: 240px;
+		padding: 0 !important;
+		border-radius:10px;
+		float: none;
+
 		.desc-title {
-			text-shadow: 0px 2px 3px rgba(0,0,0,1.0);
-			font-weight:bolder;
-			color:white;
-			background-clip:text;
+			border-top-left-radius:5px;
+			border-top-right-radius:5px;
+			text-shadow: 0 2px 3px rgba(0,0,0,1.0);
+			font-weight: bolder;
+			color: white;
+			background-clip: text;
 			padding: 10px;
 			margin: 0 !important;
 			background: $lightblue;
-
 		}
 
+		.desc-body {
+			i {
+				font-size:120px;
+				padding-top:15px;
+			}
 
-
+			.desc-text {
+				margin-top:15px;
+			}
+		}
 	}
-	i {
-		font-size:72px;
-		max-height:240px;
-	}
 
+	.desc-arrow {
+		font-size: 72px;
+		height: 240px;
+		float: none !important;
+		display: inline-block;
+
+		i {
+			padding-top: 40px;
+		}
+	}
 }
 
-
-
-
-
 #navigation {
-	text-align:right;
+	text-align: right;
 	padding: 25px 10px 0;
 
 	#navigation-list {
-		font-size:20px;
+		font-size: 20px;
+
 		.navigation-item {
 			list-style-type: none;
-			display:inline-block;
-			padding-left:15px;
-			padding-right:15px;
+			display: inline-block;
+			padding-left: 15px;
+			padding-right: 15px;
 
 			.navigation-link {
-
-					i {
-						font-size:24px;
-					}
+				i {
+					font-size: 24px;
 				}
 			}
-
+		}
 	}
-
-
 }
 
-
 #auth-control-row {
-	display:flex;
-	flex-direction:row;
-	justify-content:space-around;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+
 	.auth-action {
-		padding:5px;
-		text-align:center;
-		font-size:25px;
-		border:2px solid $midblue;
-		border-style:inset;
-		border-radius:10px;
-		width:30%;
+		padding: 5px;
+		text-align: center;
+		font-size: 25px;
+		border: 2px solid $midblue;
+		border-style: inset;
+		border-radius: 10px;
+		width: 30%;
 		transition: all 0.5s ease-in-out;
 		-webkit-transition: all 0.5s ease-in-out;
+
 		i {
-			padding:5px;
-			font-size:50px;
+			padding: 5px;
+			font-size: 50px;
 			transition: all 0.5s ease-in-out;
 			-webkit-transition: all 0.5s ease-in-out;
 		}
 
 		i:hover {
-			cursor:pointer;
+			cursor: pointer;
 		}
-
-
 	}
 
 	.auth-action:hover {
-		transform:scale(1.1);
-		cursor:pointer;
+		transform: scale(1.1);
+		cursor: pointer;
+
 		i.fa-lightbulb-o {
-			transform:scale(1.3);
-			color:#377980;
+			transform: scale(1.3);
+			color: #377980;
 		}
 
 		i.fa-cog {
-			transform:rotate(360deg);
+			transform: rotate(360deg);
 		}
 
 		i.fa-address-card {
-			transform:scale(1.3);
-			color:#377980;
+			transform: scale(1.3);
+			color: #377980;
 		}
-
 	}
-
 }
 
 .initial_hidden {
@@ -311,55 +324,61 @@ header {
 }
 
 .group-container {
-	position:relative;
+	position: relative;
 
 	.group-detail {
-
-		margin-top:25px;
-
+		margin-top: 25px;
 	}
 
 	.group-brightness-container {
 		.group-brightness-text {
-			font-weight:bold;
-			font-size:20px;
+			font-weight: bold;
+			font-size: 20px;
 		}
+
 		.rangeslider {
 			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f2f2+0,53cbf1+63,05abe0+100 */
-			background: #f2f2f2; /* Old browsers */
-			background: -moz-linear-gradient(left,  #f2f2f2 0%, #53cbf1 63%, #05abe0 100%); /* FF3.6-15 */
-			background: -webkit-linear-gradient(left,  #f2f2f2 0%,#53cbf1 63%,#05abe0 100%); /* Chrome10-25,Safari5.1-6 */
-			background: linear-gradient(to right,  #f2f2f2 0%,#53cbf1 63%,#05abe0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#05abe0',GradientType=1 ); /* IE6-9 */
+			background: #f2f2f2;
+			/* Old browsers */
+			background: -moz-linear-gradient(left, #f2f2f2 0%, #53cbf1 63%, #05abe0 100%);
+			/* FF3.6-15 */
+			background: -webkit-linear-gradient(left, #f2f2f2 0%,#53cbf1 63%,#05abe0 100%);
+			/* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to right, #f2f2f2 0%,#53cbf1 63%,#05abe0 100%);
+			/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr= '#f2f2f2', endColorstr='#05abe0',GradientType=1 );
+			/* IE6-9 */
 		}
 
 		.rangeslider__fill {
-			background-color:transparent;
+			background-color: transparent;
 		}
-
 	}
 
 	.group-temp-container {
-
 		.group-temp-text {
-			font-weight:bold;
-			font-size:20px;
+			font-weight: bold;
+			font-size: 20px;
 		}
-		 .rangeslider {
+
+		.rangeslider {
 			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f2f2+0,53cbf1+63,05abe0+100 */
-			background: #ff9329; /* Old browsers */
-			background: -moz-linear-gradient(left,  #ff9329 0%, #ffffff 81%, #ffffff 81%, #207cca 100%, #207cca 100%, #7db9e8 100%); /* FF3.6-15 */
-			background: -webkit-linear-gradient(left,  #ff9329 0%,#ffffff 81%,#ffffff 81%,#207cca 100%,#207cca 100%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
-			background: linear-gradient(to right,  #ff9329 0%,#ffffff 81%,#ffffff 81%,#207cca 100%,#207cca 100%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9329', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 */
+			background: #ff9329;
+			/* Old browsers */
+			background: -moz-linear-gradient(left, #ff9329 0%, #ffffff 81%, #ffffff 81%, #207cca 100%, #207cca 100%, #7db9e8 100%);
+			/* FF3.6-15 */
+			background: -webkit-linear-gradient(left, #ff9329 0%,#ffffff 81%,#ffffff 81%,#207cca 100%,#207cca 100%,#7db9e8 100%);
+			/* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to right, #ff9329 0%,#ffffff 81%,#ffffff 81%,#207cca 100%,#207cca 100%,#7db9e8 100%);
+			/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr= '#ff9329', endColorstr='#7db9e8',GradientType=1 );
+			/* IE6-9 */
 		}
 
 		.rangeslider__fill {
-			background-color:transparent;
+			background-color: transparent;
 		}
-
 	}
-
 
 	.group-header {
 		text-align: left;
@@ -376,32 +395,27 @@ header {
 
 	.group-actions {
 		text-align: right;
-		z-index:2;
+		z-index: 2;
+
 		.action-mini {
 			display: inline-block;
 			padding-left: 15px;
 			padding-right: 15px;
 		}
 	}
+
 	.group-loader {
 		font-size: 120px;
-		text-align:center;
-		top:calc(50% - 60px) !important;
-		left:calc(50% - 45px) !important;
+		text-align: center;
+		top: calc(50% - 60px) !important;
+		left: calc(50% - 45px) !important;
 		left: 0;
 		position: absolute;
 
-		i {
-		}
-
+		i {}
 	}
-
-
 }
-
-
-
-	/**
+/**
 
 RANGESLIDER CSS -- FROM https://codepen.io/thelifemgmt/pen/CeLqA/
 
