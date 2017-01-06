@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Libraries\LifxSwitch;
-use Exception;
+use \Exception;
 
 
 class LifxSwitch
@@ -85,7 +85,7 @@ class LifxSwitch
     public function togglePowerSingle($lightId) {
 
       // Trigger Error Hurr
-      //$lightId = subStr($lightId, 3);
+      //$lightId = subStr($lightId, -3);
 
       $link = "https://api.lifx.com/v1/lights/{$lightId}/toggle";
 
@@ -96,7 +96,6 @@ class LifxSwitch
       curl_setopt($ch, CURLOPT_POST, true);
 
       $response = curl_exec($ch);
-
       $res = json_decode($response, true);
 
       $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -105,8 +104,9 @@ class LifxSwitch
 
       $resArr['responsecode'] = $httpCode;
 
+
       if($httpCode != 207) {
-          return json_encode($resArr);
+        abort(500);
       }
 
       if( isset($res["results"][0]["status"]) ) {
@@ -141,6 +141,7 @@ class LifxSwitch
 
     public function setState($lightId, $color, $brightness, $temp)
     {
+
 
         $data = array(
           'states' => array(
@@ -230,7 +231,7 @@ class LifxSwitch
         throw new Exception("cURL error: {curl_error($ch)}");
       }
 
-      if($httpcode > 207 ) {
+      if( $httpcode > 207 ) {
         throw new Exception("Call was unsuccessful- HTTP Code {$httpcode}");
       }
 

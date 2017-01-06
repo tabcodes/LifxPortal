@@ -3,7 +3,7 @@
 <head>
   {!! Html::style('css/req.css') !!}
   {!! Html::script('js/req.js') !!}
-
+  <title>LightPortal</title>
     @if(isset($lightBox))
       {!! Html::style('css/lights.css') !!}
       {!! Html::script('js/lights.js') !!}

@@ -8,12 +8,12 @@
         </li>
 
         <li class="navigation-item">
-          <a  class="navigation-link btn btn-default" alt="Log In" href="login">Login</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link btn btn-default" href="register">Register</a>
+          <a  class="navigation-link btn btn-default" alt="Log In" href="/login">Login</a>
         </li>
 
+        <li class="navigation-item">
+          <a class="navigation-link btn btn-default" href="/register">Register</a>
+        </li>
       </ul>
     </nav>
 </div>

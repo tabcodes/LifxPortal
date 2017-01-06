@@ -17,6 +17,7 @@ const elixir = require('laravel-elixir');
      mix.sass([
              'spectrum.css',
              'rangeslider.css',
+             'sweetalert.min.css',
              'select2.min.css',
          ],
          'public/css/lights.css');
@@ -33,6 +34,7 @@ const elixir = require('laravel-elixir');
              'rangeslider.js',
              'select2.min.js',
              'jquery-knob-min.js',
+             'sweetalert.min.js',
              'lightcontrols.js',
          ],
          'public/js/lights.js');
