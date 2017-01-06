@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Libraries\LifxSwitch\LifxSwitch;
 use Auth;
 use Illuminate\Http\Request;
+use \Exception;
+
 
 class PagesController extends Controller
 {
@@ -43,6 +45,22 @@ class PagesController extends Controller
           $Lifx = new LifxSwitch($trueKey);
         } catch(Exception $e) {
 
+          $str = $e->getMessage();
+
+          if(strstr($str, "401")) {
+            $ret = [
+              'message' => 'It seems that the LIFX key you set failed to authenticate with your lights. Try logging into cloud.lifx.com and setting up another key.'
+            ];
+          } else {
+            $ret = [
+              'message' => 'There was a problem reaching your lights- try logging into cloud.lifx.com and setting up another key.'
+            ];
+          }
+
+
+
+          return view("errors.keyerror")
+          ->with('error', $ret);
 
 
         }

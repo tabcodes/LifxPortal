@@ -12,14 +12,14 @@ $(function() {
         e.preventDefault();
         var groupId = $(this).data('group');
         var el = $("#" + groupId + "-brightness-detail");
-        if($(".group-detail").is(":visible")) {
-          $(".group-detail").slideUp('fast');
+        if ($(".group-detail").is(":visible")) {
+            $(".group-detail").slideUp('fast');
         }
 
-        if(el.is(":visible")) {
-          el.slideUp('fast');
+        if (el.is(":visible")) {
+            el.slideUp('fast');
         } else {
-          el.slideDown('fast');
+            el.slideDown('fast');
         }
 
     });
@@ -30,14 +30,14 @@ $(function() {
         var groupId = $(this).data('group');
         var el = $("#" + groupId + "-temp-detail");
 
-        if($(".group-detail").is(":visible")) {
-          $(".group-detail").slideUp('fast');
+        if ($(".group-detail").is(":visible")) {
+            $(".group-detail").slideUp('fast');
         }
 
-        if(el.is(":visible")) {
-          el.slideUp('fast');
+        if (el.is(":visible")) {
+            el.slideUp('fast');
         } else {
-          el.slideDown('fast');
+            el.slideDown('fast');
         }
 
     })
@@ -155,9 +155,8 @@ function dimGroupBox(groupId) {
 }
 
 function lightGroupBox(groupId) {
-
     $("#group-" + groupId + "-loader").fadeOut();
-
+    $("#light-box-" + groupId).css('opacity', '1.0');
 }
 
 
@@ -171,6 +170,18 @@ function dimLightBox(elementId, setpower) {
     lightInner.css('opacity', '0.4');
     var lightLoader = lightInner.siblings(".light-loader");
     lightLoader.fadeIn('fast');
+}
+
+function sharpenLightBox(lightId) {
+
+  $(".light-loader").fadeOut();
+  var el = $("#" + lightId).find('.light-inner');
+  console.log(el);
+
+  el.css('opacity', '1.0');
+
+
+
 }
 
 function handleLightSuccess(lightId, response) {
@@ -187,7 +198,6 @@ function handleLightSuccess(lightId, response) {
 }
 
 function handleGroupSuccess(groupId, response) {
-    console.log
     composedView = response.composedView;
 
     var el = $(composedView).find('#light-box-' + groupId);
@@ -199,9 +209,6 @@ function handleGroupSuccess(groupId, response) {
     });
 
 
-
-
-    console.log(el);
 
 }
 
@@ -216,8 +223,8 @@ function callLightAjax(endpoint, data, lightId) {
         },
         data: data,
         statusCode: {
-            500: function() {
-                alert('failed');
+            500: function(response) {
+              handleLightError(lightId, response);
             },
             200: function(response) {
 
@@ -238,42 +245,60 @@ function callGroupAjax(endpoint, data, groupId) {
         data: data,
         statusCode: {
             500: function() {
-                alert('failed');
+              handleGroupError(groupId);
             },
             200: function(response) {
-
-                handleGroupSuccess(groupId, response);
+              handleGroupSuccess(groupId, response);
             }
         }
     });
 }
 
+function handleLightError(lightId, response) {
 
+  sharpenLightBox(lightId);
+  swal({
+    title: 'Error!',
+    text: 'We apologize- there was an error communicating with the selected light. Please ensure this light is connected, and if this issue persists, try resetting your LIFX Cloud key.',
+    type: 'error',
+  })
+
+}
+
+function handleGroupError(groupId) {
+
+  lightGroupBox(groupId);
+  swal({
+    title: 'Error!',
+    text: 'We apologize- there was an error communicating with your light group. Please the selected group exists and is connected. If the issue persists, try resetting your LIFX Cloud key.',
+    type: 'error',
+  })
+}
 
 function bindDials() {
 
 
-  $('.group-brightness-slider').rangeslider({
-      polyfill: false,
-      onSlide: function() {
-          var el = $(".group-brightness-slider");
-          var val = el.val();
-          var id = el.data('group');
-          $("#" + id + "-brightness-text").text(val + "%");
+    $('.group-brightness-slider').rangeslider({
+        polyfill: false,
+        onSlide: function() {
+            var el = $(".group-brightness-slider");
+            var val = el.val();
+            var id = el.data('group');
+            $("#" + id + "-brightness-text").text(val + "%");
 
-      }
-  });
+        }
+    });
 
-  $('.group-temp-slider').rangeslider({
-      polyfill: false,
-      onSlide: function() {
-          var el = $(".group-temp-slider");
-          var val = el.val();
-          var id = el.data('group');
-          $("#" + id + "-temp-text").text(val + "K");
+    $('.group-temp-slider').rangeslider({
+        polyfill: false,
+        onSlide: function() {
+            var el = $(".group-temp-slider");
+            var val = el.val();
+            var id = el.data('group');
+            $("#" + id + "-temp-text").text(val + "K");
 
-      }
-  });
+        }
+    });
 
 
     var binder = function() {
@@ -360,30 +385,30 @@ function bindDials() {
 
     $(".dial-color-group").each(function() {
 
-      $(this).spectrum({
-        clickoutFiresChange: false,
-        palette: [
-        ['black', 'white', 'blanchedalmond'],
-        ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
-      ],
-        change: function() {
+        $(this).spectrum({
+            clickoutFiresChange: false,
+            palette: [
+                ['black', 'white', 'blanchedalmond'],
+                ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
+            ],
+            change: function() {
 
-            var groupId = $(this).data("group");
-            var groupString = "group:" + groupId;
+                var groupId = $(this).data("group");
+                var groupString = "group:" + groupId;
 
-            dimGroupBox(groupId);
+                dimGroupBox(groupId);
 
-            url = "setStateGroup/" + groupString;
-            groupColor = $(this).spectrum('get').toHsv();
-            data = {
-              'color': groupColor
-            };
+                url = "setStateGroup/" + groupString;
+                groupColor = $(this).spectrum('get').toHsv();
+                data = {
+                    'color': groupColor
+                };
 
-            callGroupAjax(url, data, groupId);
-        }
+                callGroupAjax(url, data, groupId);
+            }
 
 
-      });
+        });
 
     })
 

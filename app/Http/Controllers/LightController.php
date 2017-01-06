@@ -30,6 +30,7 @@ class LightController extends Controller
         $user = Auth::user();
 
         $cloudKey = decrypt($user->cloudkey);
+
     }
 
     public function setStateSingle($id, Request $req) {
@@ -115,7 +116,6 @@ class LightController extends Controller
       try {
         $response = $this->lifx->togglePowerSingle($id);
       } catch(Exception $e) {
-
         abort(500);
       }
 
@@ -135,8 +135,8 @@ class LightController extends Controller
       try {
         $res = $this->lifx->togglePowerSingle($id);
       } catch(Exception $e) {
-        $resJson['status'] = "error";
-        return response()->json($resJson);
+          $resJson['status'] = "error";
+          return response()->json($resJson);
       }
 
         $res = json_decode($res, true);

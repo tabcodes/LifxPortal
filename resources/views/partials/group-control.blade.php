@@ -42,7 +42,7 @@
       id="{{$group}}-brightness-slider"
       class="group-brightness-slider"
       data-group="{{$group}}"
-      min="0"
+      min="1"
       max="100"
       step="1"
       value="{{ floor($lights[0]['brightness'] * 100) }}" /><br />

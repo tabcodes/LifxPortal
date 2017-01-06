@@ -2,7 +2,7 @@
   <div class="slider-container">
     <input type="text" class="dial-brightness"
     data-skin="tron" value="{{ floor($light['brightness'] * 100) }}"
-    min="0" max="100" step="1"
+    min="1" max="100" step="1"
     id="brightness-{{$light['id']}}"/>
   </div>
   <span class="label-icon">
