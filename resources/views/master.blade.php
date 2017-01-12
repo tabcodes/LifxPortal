@@ -9,6 +9,13 @@
       {!! Html::script('js/lights.js') !!}
     @endif
 
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3132779080766741",
+        enable_page_level_ads: true
+      });
+    </script>
 
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 
