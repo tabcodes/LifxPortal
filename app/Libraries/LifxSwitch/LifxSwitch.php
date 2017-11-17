@@ -3,6 +3,18 @@
 namespace App\Libraries\LifxSwitch;
 use \Exception;
 
+/*
+
+LIFXSwitch - A small, somewhat-hastily-written library for interacting with the LIFX API. 
+
+TBD
+---
+
+    - Refactor to use one function for triggering changes to single/multiple lights
+    - Refactor to use with Guzzle
+    - Refactor to be more Vue-friendly (React?)
+
+*/
 
 class LifxSwitch
 {
@@ -84,10 +96,10 @@ class LifxSwitch
     // To be deprecated!!
     public function togglePowerSingle($lightId) {
 
-      // Trigger Error Hurr
+      // Trigger Error Here
       //$lightId = subStr($lightId, -3);
 
-      $link = "https://api.lifx.com/v1/lights/{$lightId}/toggle";
+      $link = "{$lightId}/toggle";
 
       $headers = array('Authorization: Bearer ' . $this->authtoken);
       $ch = curl_init($link);
